@@ -1,1 +1,1 @@
-# Iridium-API-Documentation
+# Iridium API Documentation

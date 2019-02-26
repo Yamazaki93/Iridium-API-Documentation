@@ -1,0 +1,22 @@
+{
+  "name": "iridium-api-documentation",
+  "version": "0.1.0",
+  "description": "API documentation for Iridium.",
+  "scripts": {
+    "start": "docma serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yamazaki93/Iridium-API-Documentation.git"
+  },
+  "author": "Michael Lu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Yamazaki93/Iridium-API-Documentation/issues"
+  },
+  "homepage": "https://github.com/Yamazaki93/Iridium-API-Documentation#readme",
+  "devDependencies": {
+    "docma": "^3.2.2",
+    "docma-template-zebra": "^2.3.1"
+  }
+}
