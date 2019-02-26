@@ -3,7 +3,12 @@
   "version": "0.1.0",
   "description": "API documentation for Iridium.",
   "scripts": {
-    "start": "docma serve"
+    "prestart": "docma",
+    "start": "docma serve",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "start": "{src,test}/*.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +23,8 @@
   "devDependencies": {
     "docma": "^3.2.2",
     "docma-template-zebra": "^2.3.1"
+  },
+  "dependencies": {
+    "npm-watch": "^0.6.0"
   }
 }

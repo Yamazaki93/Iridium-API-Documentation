@@ -1,0 +1,56 @@
+{
+    "src": [
+        "./src/**/*.js",
+        "./src/**/*.md"
+    ],
+    "dest": "./dist/",
+    "assets": {
+        "img/": ["./*.png"] 
+    },
+    "template": {
+        "path": "zebra",
+        "options": {
+            "title": {
+                "label": "Iridium Plugin API"
+            },
+            "logo": {
+                "dark": "img/iridium-icon-256.png",
+                "light": "img/iridium-icon-256.png"
+            },
+            "sidebar": {
+                "enabled": true,
+                "outline": "tree",
+                "collapsed": false,
+                "toolbar": true,
+                "itemsFolded": false,
+                "itemsOverflow": "crop",
+                "badges": true,
+                "search": true,
+                "animations": true
+            },
+            "symbols": {
+                "autoLink": true,
+                "params": "list",
+                "enums": "list",
+                "props": "list",
+                "meta": false
+            },
+            "contentView": {
+                "bookmarks": "h1,h2,h3",
+                "faLibs": "solid,regular,brands"
+            },
+            "navbar": {
+                "enabled": true,
+                "dark": false,
+                "animations": true,
+                "menu": [
+                    {
+                        "label": "Docs",
+                        "iconClass": "fas fa-book",
+                        "href": "./"
+                    }
+                ]
+            }
+        }
+    }
+}
