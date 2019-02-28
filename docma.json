@@ -1,8 +1,12 @@
 {
     "src": [
         "./src/**/*.js",
-        "./src/**/*.md"
+        "./src/**/*.md",
+        "./src/**/*.html"
     ],
+    "app": {
+        "entrance": "content:gettingstarted"
+    },
     "dest": "./dist/",
     "assets": {
         "img/": ["./*.png"] 
@@ -45,9 +49,14 @@
                 "animations": true,
                 "menu": [
                     {
-                        "label": "Docs",
+                        "label": "Getting Started",
                         "iconClass": "fas fa-book",
                         "href": "./"
+                    },
+                    {
+                        "label": "API",
+                        "iconClass": "fas fa-code",
+                        "href": "./?api"
                     }
                 ]
             }

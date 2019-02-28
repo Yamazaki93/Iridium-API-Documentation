@@ -8,7 +8,7 @@
     "watch": "npm-watch"
   },
   "watch": {
-    "start": "{src,test}/*.js"
+    "start": "{src,test}/*.*"
   },
   "repository": {
     "type": "git",
