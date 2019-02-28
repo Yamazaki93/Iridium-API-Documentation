@@ -1,11 +1,11 @@
 /**
- * Your plugin's main module will need to implement IPlugin for it to run properly.
+ * The required capability of any plugin. Your plugin's main module will need to implement IPlugin for it to run properly.
  * 
- * The following example shows a barebone implementation of the main script
+ * 
  *
  * @interface IPlugin
  * @example 
- *  
+ * //The following example shows a barebone implementation of the main script
  * module.exports.Initialize = (iridium) => {    
  *     //Do initialization here for your plugin with "iridium"
  * }
