@@ -9,7 +9,8 @@
     },
     "dest": "./dist/",
     "assets": {
-        "img/": ["./*.png"] 
+        "img/": ["./*.png"],
+        "css/": ["./src/*.css"]
     },
     "template": {
         "path": "zebra",
