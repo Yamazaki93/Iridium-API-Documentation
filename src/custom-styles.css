@@ -22,3 +22,18 @@
     display: flex;
     position: relative;
 }
+
+.title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.go-to-top-button {
+    margin-left: 10px;
+    color: #AAAAAA;
+    cursor: pointer;
+}
+.go-to-top-button:hover {
+    color: #000000;
+}
