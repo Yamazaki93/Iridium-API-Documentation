@@ -37,3 +37,10 @@
 .go-to-top-button:hover {
     color: #000000;
 }
+
+blockquote.important {
+    border-left: 5px solid #E54B4B;
+}
+blockquote.info {
+    border-left: 5px solid #2DC7FF;
+}

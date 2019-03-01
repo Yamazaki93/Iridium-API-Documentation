@@ -19,7 +19,9 @@
                     you will
                     have all
                     you need to get started 🎉</p>
-                <blockquote> To enable plugin functionality, you will need to have a registered Iridium Cloud account and log in to Iridium Cloud.</blockquote>
+                <blockquote class="info"> To enable plugin functionality, you will need to have a registered Iridium
+                    Cloud account
+                    and log in to Iridium Cloud.</blockquote>
                 <div class="title-container">
                     <h2 id="getting-started">Getting Started </h2>
                     <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
@@ -36,8 +38,55 @@
                     you
                     haven't,
                     head over to Node.js website and download Node.js 10.</blockquote>
+
+                <div class="title-container">
+                    <h4 id="getting-started">Setting Up The Plugin </h4>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>Let's start by setting up our plugin, create a file named <code>package.json</code> with the
+                    following contents and save it under a dedicated directory, say, <code>iridium-dashboard</code>
+                </p>
+                <pre><code>{
+    "name": "idirium-dashboard",
+    "version": "0.0.1",
+    "description": "my first iridium plugin",
+    "dependencies": {}
+}</code></pre>
+                <p>This will enable allow us to use <code>npm</code> to install some packages we need, for details
+                    regarding <code>package.json</code>, see <a href="https://docs.npmjs.com/files/package.json">npm's
+                        documentation</a>. Let's also add in the required <b>Iridium Plugin Manifest</b> as well, create
+                    another file in the same
+                    directory named <code>iridium.json</code>, we will go through it in detail later.</p>
+                <blockquote class="important">Every plugin must have a valid<code>iridium.json</code> for it to be
+                    recognized by Iridium
+                </blockquote>
+                <p>Let's put the following content into <code>iridium.json</code></p>
+                <pre><code>{
+    "id": "----REPLACE WITH YOUR OWN ID----",
+    "name": "Cool Dashboard",
+    "description": "A cool dashboard",
+    "author": "Michael Lu",
+    "image": "icon.png",
+    "main": "index.js",
+}</code></pre>
+                <p>Then, we need to generate a unique ID for our plugin. You can use any <a
+                        href="https://www.uuidgenerator.net/">online UUID generator</a> to generate one. After you
+                    generate one, paste the ID you generated into <code>----RPLEACE WITH YOUR OWN ID----</code> and
+                    save the file.</p>
+                <p>So what is in <code>iridium.json</code>? Without diving too deep, <code>iridium.json</code> is
+                    the <b>Iridium Plugin Manifest</b>. It is the
+                    basic config data that identifies your Node.js program to Iridium as a plugin. All fields are required. Several important things
+                    to note for the manifest:</p>
+                <ul>
+                    <li><b>id</b> must be unuqie throughout all plugins in Iridium. Any UUID generator should give you
+                        an unique UUID in the <b>world</b>. If plugins with duplicated IDs are found, Iridium will
+                        refuse to load all of them and log them in <code>log.txt</code> file.</li>
+                    <li><b>main</b> must speficies a proper javascript file. In this case, it's the file
+                        <code>index.js</code> under the top level director of your plugin. Feel free to change it to
+                        match your own folder structure.</li>
+
+                </ul>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>

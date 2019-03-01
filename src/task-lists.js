@@ -40,8 +40,8 @@
  * Subscribes for a specific task event. The handler will be invoked when the associated event occurs in Iridium.
  * @function
  * @name IridiumApp.TaskLists#on
- * @param {TaskEvent} event The event to subscribe to. See {@link IridiumApp.TaskEvents} enum type for specific event name and associated arguments.
- * @param {Function} handler The associated event handler that will be invoked, the argument will be passed in as 1st parameter.
+ * @param {TaskEvents} event The event to subscribe to. See {@link IridiumApp.TaskEvents} enum type for specific event name and associated arguments.
+ * @param {Function} handler The associated event handler that will be invoked, the event argument will be passed in as 1st parameter.
  * @param {string} [registration] An optional registration token associated with this handler that can be used later to unsubscribe. 
  * This token need not be unique per handler.
  * 
@@ -151,6 +151,15 @@
 * @property {string} toListId The id of list where the task is moved <b>to</b>, which is UUID v4 formated.
 * @property {string} id The id of the task which is UUID v4 formated.
 */
+/**
+* event arguments for task list progress updated event.
+* @typedef TaskListProgressUpdatedEventArg
+* @type Object
+*
+* @property {string} listId The id of list.
+* @property {number} completedPercentage The percentage of the completed tasks in this list. The number is rounded to whole number.
+* @property {number} inProgressPercentage The percentage of the in-progress tasks in this list. The number is rounded to whole number.
+*/
 
 
 /**
@@ -191,5 +200,12 @@ IridiumApp.TaskEvents = {
      * Argument: {@link TaskMovedEventArg}
      * <blockquote>TaskMoved will not be emitted when a task is moved by another user and synced from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskDeletedCloud} and {@link IridiumApp.TaskEvents | TaskEvents.TaskDownloaded} </blockquote>
      */
-    TaskMoved: "TaskMoved"
+    TaskMoved: "TaskMoved",
+    
+    /**
+     * TaskListProgressUpdated is emitted when complete or progress percentage of a task list is changed. This can happen when user create a new task, mark a task in progress etc. This will also happen when data downloaded from Iridium Cloud changes a task lists' progress.
+     * <br>
+     * Argument: {@link TaskListProgressUpdatedEventArg}
+     */
+    TaskListProgressUpdated: "TaskListProgressUpdated"
 }
