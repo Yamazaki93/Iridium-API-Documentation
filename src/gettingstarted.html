@@ -33,7 +33,7 @@
                 <p>To help you get started, here's a complete step-by-step guide to build a plugin. We are going to
                     build a
                     cool web
-                    dashboard that shows the progress of our lists.</p>
+                    dashboard that shows the progress of a task list.</p>
                 <blockquote> This guide assumes you have <a href="https://nodejs.org/en/">Node.js</a> 10 installed. If
                     you
                     haven't,
@@ -76,7 +76,7 @@
                 <p>So what is in <code>iridium.json</code>? It is the
                     basic config data that identifies your Node.js program to Iridium as a plugin. This way you can keep
                     your <code>package.json</code> separate, <code>package.json</code> file is not required for Iridium
-                    to run y All fields are required. Several important things
+                    to run. All fields are required. Several important things
                     to note for the manifest:</p>
                 <ul>
                     <li><b>id</b> must be unuqie throughout all plugins in Iridium. Any UUID generator should give you
@@ -92,9 +92,50 @@
                         plugin page.</li>
                 </ul>
                 <p>For the icon, you can download any image and save it in
-                    <code>iridium-dashboard</code> folder as <code>icon.png</code>. For best results, use a high definition square png file.</p>
+                    <code>iridium-dashboard</code> folder as <code>icon.png</code>. For best results, use a high
+                    definition square png file.</p>
+                <p>Let's also add in an empty <code>index.js</code> file in <code>iridium-dashboard</code> for later.
+                </p>
+                <p>After you complete the steps, your plugin folder should look like this:</p>
+                <pre><code>iridium-dashboard
+|--index.js
+|--iridium.json
+|--package.json
+|--icon.png</code></pre>
+                <div class="title-container">
+                    <h4 id="getting-started">Adding A Basic Website </h4>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>Now let's add a basic web server and website to display our dashboard. First, add <a
+                        href="https://expressjs.com/">express</a> as a dependency with the following command:</p>
+                <p><code>npm install --save express</code></p>
+                <p>After express is installed, add the following code in <code>index.js</code></p>
+                <pre><code>const app = require('express')();
+const http = require('http').Server(app);
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
+http.listen(3000);</code></pre>
+                <p>Then create <code>index.html</code> and fill in the following</p>
+                <pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+    &lt;title&gt;Iridium Dashboard&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Hello Iridium&lt;/h1&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+                <p>Now open any terminal, change directory to <code>iridium-dashboard</code>. You should be able to run
+                    <code>node index.js</code>. Then you should be able to open your browser and see the following:</p>
+                <img class="screenshot" src="/img/sc01.png">
+                <p>After you scessfully loaded the page, let's add in couple more things. First, create <code>style.css</code> with the following contents: </p>
             </div>
         </div>
-
     </div>
 </div>

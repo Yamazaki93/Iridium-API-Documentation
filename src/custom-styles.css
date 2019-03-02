@@ -44,3 +44,6 @@ blockquote.important {
 blockquote.info {
     border-left: 5px solid #2DC7FF;
 }
+.screenshot {
+    width: 800px;
+}
