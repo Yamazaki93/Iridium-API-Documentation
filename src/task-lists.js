@@ -83,7 +83,6 @@
 * @property {boolean} completed Boolean indicating whether the task list is completed.
 * @property {number} completedPercentage The percentage of the completed tasks in this list. The number is rounded to whole number.
 * @property {number} inProgressPercentage The percentage of the in-progress tasks in this list. The number is rounded to whole number.
-* @property {number} order A ordering sequence number applied to the task list
 */
 
 /**
