@@ -6,6 +6,15 @@
                 <li>
                     <h5><a href="#getting-started">Getting Started</a></h5>
                 </li>
+                <li>
+                    <small><a href="#setting-up-plugin">Setting Up The Plugin</a></small>
+                </li>
+                <li>
+                    <small><a href="#adding-website">Adding A Basic Website</a></small>
+                </li>
+                <li>
+                    <small><a href="#connecting-iridium">Connecting With Iridium</a></small>
+                </li>
             </ul>
         </div>
         <div class="main-content" id="top">
@@ -38,9 +47,8 @@
                     you
                     haven't,
                     head over to Node.js website and download Node.js 10.</blockquote>
-
                 <div class="title-container">
-                    <h4 id="getting-started">Setting Up The Plugin </h4>
+                    <h4 id="setting-up-plugin">Setting Up The Plugin </h4>
                     <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
                 </div>
                 <p>Let's start by setting up our plugin, create a file named <code>package.json</code> with the
@@ -102,8 +110,11 @@
 |--iridium.json
 |--package.json
 |--icon.png</code></pre>
+                <blockquote class="info">If you want to skip the web interface and jump to the plugin part, see <a
+                        href="#connecting-iridium">Connecting With Iridium</a></blockquote>
+
                 <div class="title-container">
-                    <h4 id="getting-started">Adding A Basic Website </h4>
+                    <h4 id="adding-website">Adding A Basic Website </h4>
                     <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
                 </div>
                 <p>Now let's add a basic web server and website to display our dashboard. First, add <a
@@ -198,23 +209,60 @@ http.listen(3000);</code></pre>
 |--package.json
 |--icon.png</code></pre>
                 <div class="title-container">
-                    <h4 id="getting-started">Connecting With Iridium </h4>
+                    <h4 id="connecting-iridium">Connecting With Iridium </h4>
                     <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
                 </div>
                 <p>We are finally at the exciting part. So far the project is just
                     like any simple Node.js website, but we will now supercharge this website by connecting it with
                     Iridium.</p>
                 <p>Let's start by going over how to connect your Node.js program with Iridium. Your main
-                    file (previously specified in <code>iridium.json</code>) will need to become a module that fulfills
-                    <code><a href="/?api#IPlugin">IPlugin</a></code> interface by providing a pre-defined
-                    <code>function Initialize(iridium)</code>. When Iridium is ready to
+                    file (previously specified in <code>iridium.json</code> and in this case is the
+                    <code>index.js</code>) will need to become a module that fulfills
+                    <code><a href="/?api#IPlugin">IPlugin</a></code> interface by providing a pre-defined export
+                    <code>Initialize(iridium)</code>. When Iridium is ready to
                     load your plugin, it will call this function and provide your plugin with Iridium's capabilities in
                     <code>iridium</code> parameter.</p>
-                <p>This way, you can perform your own initialization and cleanup if needed.</p>
+                <p>This way, you can perform your own initialization before your plugin is loaded if needed.</p>
                 <blockquote class="important">If your main module does not export <code>Initialize</code> method, an
-                    error will be logged in <code>log.txt</code> and your plugin will appear in error state in the Plugins page
+                    error will be logged in <code>log.txt</code> and your plugin will appear in error state in the
+                    Plugins page
                 </blockquote>
-                <p>To do that, let's first modify <code>index.json</code> with the following</p>
+                <blockquote class="info">For details about on the <code>iridium</code> parameter and its full
+                    capabilities, see <a href="/?api#IridiumApp"><code>IridiumApp</code></a></blockquote>
+                <p>To do that, let's first modify <code>index.js</code> to the following:</p>
+                <pre><code>const express = require('express');
+const app = require('express')();
+const http = require('http').Server(app);
+
+app.use(express.static('public'))
+
+http.listen(3000);
+
+// --- The above will run first ---
+
+module.exports.Initialize = (iridium) => {
+    // --- Iridium will call this function here and pass in the app context --- 
+}</code></pre>
+                <p>And that's it! Your Node.js program is an Iridium plugin 😎, simple enough right? </p>
+                <p>Let's try it out, exit Iridium if it's open and the Node.js server if it's still running, then copy
+                    the whole directory into
+                    <code>Your Home Directory/Iridium/plugins</code> as a directory.</p>
+                <p>Afterwards, your <code>Iridium</code> directory should look like the following</p>
+                <pre><code>Iridium
+|--plugins
+|  |--iridium-dashboard
+|  |  |--public
+|  |  |  |--index.html
+|  |  |  |--style.css
+|  |  |--index.js
+|  |  |--iridium.json
+|  |  |--package.json
+|  |  |--icon.png
+|--data.json
+|--settings.json
+|--...</code></pre>
+                <p>Then, start Iridium app, click <code>Plugins</code> on the left navigation panel, you should see this</p>
+                <img class="screenshot" src="/img/sc03.png">
             </div>
         </div>
     </div>
