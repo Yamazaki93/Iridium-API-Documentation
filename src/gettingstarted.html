@@ -110,15 +110,20 @@
                         href="https://expressjs.com/">express</a> as a dependency with the following command:</p>
                 <p><code>npm install --save express</code></p>
                 <p>After express is installed, add the following code in <code>index.js</code></p>
-                <pre><code>const app = require('express')();
+                <pre><code>const express = require('express');
+const app = require('express')();
 const http = require('http').Server(app);
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
+app.use(express.static('public'))
 
 http.listen(3000);</code></pre>
-                <p>Then create <code>index.html</code> and fill in the following</p>
+                <p>
+                    <blockquote>This script will serve all files under <code>public</code> folder. You should make any
+                        necessary adjustments to properly secure your files when running in production environment.
+                    </blockquote>
+                </p>
+                <p>Then create folder <code>public</code> and create file <code>index.html</code> under it. Fill in the
+                    following</p>
                 <pre><code>&lt;!doctype html&gt;
 &lt;html&gt;
 
@@ -132,9 +137,84 @@ http.listen(3000);</code></pre>
 
 &lt;/html&gt;</code></pre>
                 <p>Now open any terminal, change directory to <code>iridium-dashboard</code>. You should be able to run
-                    <code>node index.js</code>. Then you should be able to open your browser and see the following:</p>
+                    <code>node index.js</code>. Then you should be able to open your browser, navigate to
+                    <code>http://localhost:3000</code> and see the following:</p>
                 <img class="screenshot" src="/img/sc01.png">
-                <p>After you scessfully loaded the page, let's add in couple more things. First, create <code>style.css</code> with the following contents: </p>
+                <p>After you scessfully loaded the page, let's add in couple more things. First, create
+                    <code>public/style.css</code> with the following contents: </p>
+                <pre><code>body {
+    background: #353535;
+    color: #EFEFEF;
+    font: 13px Helvetica, Arial;
+}
+.text-primary {
+    color: #4287ff;
+}
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.large-text {
+    font-size: 80pt;
+}</code></pre>
+                <p>Then, modify <code>public/index.html</code> to contain the following: </p>
+                <pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+    &lt;title&gt;Iridium Dashboard&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/style.css"&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;div&gt;
+            &lt;h1&gt;Dashboard&lt;/h1&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;h3 class="text-primary" id="list-title"&gt;-&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;h1 class="large-text" id="completed-tasks"&gt;0&lt;/h1&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+                <p>Then restart your server by re-running <code>node index.js</code>, refresh your browser, you should
+                    see this:</p>
+                <img class="screenshot" src="/img/sc02.png">
+                <p>At this moment, your plugin folder should look like this:</p>
+                <pre><code>iridium-dashboard
+|--public
+|  |--index.html
+|  |--style.css
+|--index.js
+|--iridium.json
+|--package.json
+|--icon.png</code></pre>
+                <div class="title-container">
+                    <h4 id="getting-started">Connecting With Iridium </h4>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>We are finally at the exciting part. So far the project is just
+                    like any simple Node.js website, but we will now supercharge this website by connecting it with
+                    Iridium.</p>
+                <p>Let's start by going over how to connect your Node.js program with Iridium. Your main
+                    file (previously specified in <code>iridium.json</code>) will need to become a module that fulfills
+                    <code><a href="/?api#IPlugin">IPlugin</a></code> interface by providing a pre-defined
+                    <code>function Initialize(iridium)</code>. When Iridium is ready to
+                    load your plugin, it will call this function and provide your plugin with Iridium's capabilities in
+                    <code>iridium</code> parameter.</p>
+                <p>This way, you can perform your own initialization and cleanup if needed.</p>
+                <blockquote class="important">If your main module does not export <code>Initialize</code> method, an
+                    error will be logged in <code>log.txt</code> and your plugin will appear in error state in the Plugins page
+                </blockquote>
+                <p>To do that, let's first modify <code>index.json</code> with the following</p>
             </div>
         </div>
     </div>
