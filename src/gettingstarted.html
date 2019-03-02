@@ -73,20 +73,28 @@
                         href="https://www.uuidgenerator.net/">online UUID generator</a> to generate one. After you
                     generate one, paste the ID you generated into <code>----RPLEACE WITH YOUR OWN ID----</code> and
                     save the file.</p>
-                <p>So what is in <code>iridium.json</code>? Without diving too deep, <code>iridium.json</code> is
-                    the <b>Iridium Plugin Manifest</b>. It is the
-                    basic config data that identifies your Node.js program to Iridium as a plugin. All fields are required. Several important things
+                <p>So what is in <code>iridium.json</code>? It is the
+                    basic config data that identifies your Node.js program to Iridium as a plugin. This way you can keep
+                    your <code>package.json</code> separate, <code>package.json</code> file is not required for Iridium
+                    to run y All fields are required. Several important things
                     to note for the manifest:</p>
                 <ul>
                     <li><b>id</b> must be unuqie throughout all plugins in Iridium. Any UUID generator should give you
-                        an unique UUID in the <b>world</b>. If plugins with duplicated IDs are found, Iridium will
-                        refuse to load all of them and log them in <code>log.txt</code> file.</li>
+                        an unique UUID in the <b>world</b>. <blockquote>If plugins with duplicated IDs are found,
+                            Iridium
+                            will
+                            refuse to load all of them and log them in <code>log.txt</code> file.</blockquote>
+                    </li>
                     <li><b>main</b> must speficies a proper javascript file. In this case, it's the file
-                        <code>index.js</code> under the top level director of your plugin. Feel free to change it to
+                        <code>index.js</code> under the top level directory of your plugin. Feel free to change it to
                         match your own folder structure.</li>
-
+                    <li><b>image</b> must speficies a valid icon for your plugin, this will be displayed in Iridium's
+                        plugin page.</li>
                 </ul>
+                <p>For the icon, you can download any image and save it in
+                    <code>iridium-dashboard</code> folder as <code>icon.png</code>. For best results, use a high definition square png file.</p>
             </div>
         </div>
 
     </div>
+</div>
