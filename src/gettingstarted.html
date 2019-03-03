@@ -131,7 +131,7 @@
 const app = require('express')();
 const http = require('http').Server(app);
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 http.listen(3000);</code></pre>
                 <p>
@@ -308,18 +308,18 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 http.listen(3000);
 
 const listData = {
     listTitle: '',
     completedPercentage: 0
-}
+};
 
 io.on('connection', (socket) => {
     socket.emit('list-data', listData);
-})
+});
 
 module.exports.Initialize = (iridium) => {
     iridium.TaskLists.GetTaskLists().then((data) => {
@@ -336,8 +336,7 @@ module.exports.Initialize = (iridium) => {
                 <pre><code>const listData = {
     listTitle: '',
     completedPercentage: 0
-}
-</code></pre>
+};</code></pre>
                 <p>Then, we send out the data to any newly connected clients with the following code:</p>
                 <pre><code>io.on('connection', (socket) => {
     socket.emit('list-data', listData);
@@ -364,11 +363,11 @@ if (data.length) {
                     during <code>Initialize</code>. So it wouldn't know about any new data after
                     <code>Initialize</code>, including the new list we added.
                 </p>
-                <p>To fix this for now, let's restart Iridium. Thanks to socket.io, your dashboard web page should
+                <p>To fix this for now, let's restart Iridium. Thanks to socket.io, your dashboard should
                     update automatically to this.</p>
                 <img class="screenshot" src="/img/sc06.png">
-                <p>Now our dashboard is working...🤔 Well not quite, after you mark couple tasks as done, you
-                    will need to restart Iridium to see the new progress. That's not really good, and we will fix this
+                <p>Now our dashboard is working...🤔 Well not quite, we still
+                    will need to restart Iridium to see the new data. That's not really good, and we will fix this
                     in the next section.</p>
                 <div class="title-container">
                     <h4 id="subscribing-events">Subscribing For Events </h4>
@@ -385,7 +384,7 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 http.listen(3000);
 
@@ -393,11 +392,11 @@ const listData = {
     listID: '', // we keep track of the list id to know which one's progress is updated
     listTitle: '',
     completedPercentage: 0
-}
+};
 
 io.on('connection', (socket) => {
     socket.emit('list-data', listData);
-})
+});
 
 module.exports.Initialize = (iridium) => {
     iridium.TaskLists.GetTaskLists().then((data) => {
@@ -409,7 +408,7 @@ module.exports.Initialize = (iridium) => {
         }
     });
     iridium.TaskLists.on(iridium.TaskEvents.TaskListProgressUpdated, (progress) => {
-        if(progress.listId === listData.listID) {
+        if (progress.listId === listData.listID) {
             // if the progress update event is about the list we care about, update the progress percentage
             listData.completedPercentage = progress.completedPercentage;
             io.emit('list-data', listData);
