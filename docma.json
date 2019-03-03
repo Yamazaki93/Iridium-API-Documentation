@@ -9,7 +9,7 @@
     },
     "dest": "./dist/",
     "assets": {
-        "img/": ["./img/*.png"],
+        "img/": ["./img/*.*"],
         "css/": ["./src/*.css"]
     },
     "template": {
