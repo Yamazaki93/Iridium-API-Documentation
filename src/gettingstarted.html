@@ -273,7 +273,7 @@ module.exports.Initialize = (iridium) => {
                 <img class="screenshot" src="/img/sc03.png">
                 <p>See that green dot? That means the plugin is up and running, you should be able to point your browser
                     to <code>http://localhost:3000</code> and see the same page as before</p>
-                <p>If you can see the green dot and browse the web page, congratulations, your plugin is now up and
+                <p>If you can see the green dot and browse the web page, your plugin is now up and
                     running in Iridium. Keep in mind that plugin feature is only available when you are logged in to
                     Iridium
                     Cloud. All plugins will be deactivated when you log out.</p>
@@ -290,7 +290,7 @@ module.exports.Initialize = (iridium) => {
                 <p>Then, add these at the bottom of the <code>&lt;head&gt;</code> section:</p>
                 <pre><code>&lt;script src="/socket.io/socket.io.js"&gt;&lt;/script&gt;
 &lt;script src="https://code.jquery.com/jquery-1.11.1.js"&gt;&lt;/script&gt;</code></pre>
-                <p>This will add necessary libraries in our web interface. Then, add the following script in the after
+                <p>This will add necessary libraries in our web interface. Then, add the following script in after
                     <code>&lt;/body&gt;</code> section:</p>
                 <pre><code>&lt;script&gt;
 $(function () {
@@ -350,7 +350,8 @@ if (data.length) {
     listData.completedPercentage = data[0].completedPercentage;
     io.emit('list-data', listData);
 }</code></pre>
-                <p>Here, only get the first list out of all task lists and record the data we care about. You can extend
+                <p>Then, we only get the first list out of all task lists and record the data we care about. You can
+                    extend
                     it to report all task lists and more data.</p>
                 <blockquote class="info">Here the tutorial assumes your Iridium has no existing task lists. If you do,
                     you might see different results</blockquote>
@@ -375,8 +376,9 @@ if (data.length) {
                 </div>
                 <p>Let's complete our dashboard by subscribing to Iridium's events. Iridium will emit specific events
                     when things changes in the app, such as when a list's progress is updated. Your plugin can listen to
-                    those and know exactly when the new data is available.</p>
-                <p>To subscribe for event, we will use the <code>on</code> function. Let's modify <code>index.js</code>
+                    those and know exactly when new data is available.</p>
+                <p>To subscribe for the event, we will use the <code>on</code> function. Let's modify
+                    <code>index.js</code>
                     to the following:</p>
                 <pre><code>const express = require('express');
 const app = require('express')();
@@ -418,8 +420,22 @@ module.exports.Initialize = (iridium) => {
                     <code>TaskListProgressUpdated</code> event and pass relevant data into the handler using
                     <code>eventArgs</code>. Our plugin then record the data, and send the data to our clients using
                     socket.io</p>
+                <blockquote class="info"><code>iridium.TaskEvents.TaskListProgressUpdated</code> is just one of many
+                    events you can
+                    subscribe to. Head over to the <a href="/?api#IridiumApp.TaskLists#on">API section</a> to see all
+                    events available
+                </blockquote>
+                <blockquote>
+                    Remember, an event handler will stay subscribed after you call <code>on</code>. To unsubscribed a
+                    handler, use <a href="?api#IridiumApp.TaskLists#off"><code>off</code></a> function
+                </blockquote>
                 <p>With this, let's restart Iridium, start ticking off tasks in our list and look at the magic!</p>
                 <img class="screenshot" src="/img/final.gif">
+                <p>Congratulations! You've successfully made a live dashboard. But these are just some of the plugin
+                    system's feature we covered. Continue reading the rest of this guide to learn more about other
+                    features.</p>
+                <p>The complete example code can be found at the <a
+                        href="https://github.com/Yamazaki93/Iridium-Dashboard">Iridium Dashboard Repo</a></p>
             </div>
         </div>
     </div>

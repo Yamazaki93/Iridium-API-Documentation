@@ -50,14 +50,14 @@
                 "animations": true,
                 "menu": [
                     {
-                        "label": "Development Guide",
+                        "label": "Getting Started",
                         "iconClass": "fas fa-book",
                         "href": "./"
                     },
                     {
-                        "label": "Technical Details",
+                        "label": "Development Guide",
                         "iconClass": "fas fa-cubes",
-                        "href": "./tech"
+                        "href": "./?content=development"
                     },
                     {
                         "label": "API",

@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="css/custom-styles.css">
+<div class="container">
+    <div class="inner">
+        <div class="side-nav">
+            <ul>
+                <li>
+                    <h5><a href="#advanced">Advanced</a></h5>
+                </li>
+                <li>
+                    <small><a href="#logging">Logging</a></small>
+                </li>
+            </ul>
+        </div>
+        <div class="main-content" id="top">
+            <div class="contents">
+                <div class="title-container">
+                    <h2 id="advanced">Advanced </h2>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>In the following sections, we will discuss several advanced topics about the Plugin system in general. If you
+                    havn't, we strongly recommand reading through the Getting Started section for the basics.</p>
+                <div class="title-container">
+                    <h4 id="logging">Logging </h4>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>During initialization of your plugin, Iridium will pass in <a
+                        href="/?api#IridiumApp.Log"><code>Log</code></a> object as a logger. Your plugin can freely
+                    utilize this object to log debug, info or error data. </p>
+                <blockquote>Exercise caution when logging user's personal information, if use the logger to log personal
+                    inforamtion such as email, name, please inform the user in your plugin's description</blockquote>
+                <p>For example, you can log a debug entry like so:</p>
+                <pre><code>module.exports.Initialize = (iridium) => {
+    iridium.Log.Debug('My plugin is initialized');
+}</code></pre>
+                <p>You can also change your logger's log level to selectively omit certain levels of logs. The logger
+                    will only log entries from the set level and up. The available levels are, from low to high:</p>
+                <ul>
+                    <li>debug</li>
+                    <li>info</li>
+                    <li>warn</li>
+                    <li>error</li>
+                </ul>
+                <p>For example, setting the logger level to <code>warn</code> will disable all <code>debug</code> and
+                    <code>info</code> logs:</p>
+                <pre><code>module.exports.Initialize = (iridium) => {
+    iridium.Log.SetLevel('warn')
+    iridium.Log.Debug('This debug line is not logged');
+    iridium.Log.Warn('This warning is logged');
+}</code></pre>
+                <p>Setting the level to <code>false</code> disables the logger</p>
+                <blockquote>Setting the logger level is presistent, which means the level won't change unless you reset it. The default level is 'debug' </blockquote>
+                <p>The log file can be found at <code>Your Home Directory/Iridium/plugins/Your Plugin Directory/log.txt</code></p>
+            </div>
+        </div>
+    </div>
+</div>
