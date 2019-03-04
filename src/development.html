@@ -7,7 +7,7 @@
                     <h5><a href="#advanced">Advanced</a></h5>
                 </li>
                 <li>
-                    <small><a href="#initialization">Initialization Sequence</a></small>
+                    <small><a href="#initialization">Initialization And Shutdown Sequence</a></small>
                 </li>
                 <li>
                     <small><a href="#logging">Logging And STDIO</a></small>
@@ -23,7 +23,7 @@
                 <p>In the following sections, we will discuss several advanced topics about the Plugin system. If you
                     havn't, we strongly recommand reading through the Getting Started section for the basics.</p>
                 <div class="title-container">
-                    <h4 id="initialization">Initialization Sequence</h4>
+                    <h4 id="initialization">Initialization And Shutdown Sequence</h4>
                     <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
                 </div>
                 <p>As you've already seen in Getting Started, Iridium will call your plugin to initialize and provide
@@ -32,13 +32,30 @@
                 <img class="screenshot" src="/img/init-sequence.png">
                 <p>Several things to note here: </p>
                 <ul>
+                    <li>If the user did not log in to Iridium Cloud, your plugin's lifecycle will not begin. That means
+                        non of your plugin code will be run
+                    </li>
                     <li>When Iridium calls <code>Initialize(iridium)</code> at 5., all the task list, label and progress
                         data are loaded from disk but cloud sync <b>MAY</b> be in progress. Your plugins should listen
                         to relevant cloud events to synchornize data correctly and not solely rely on
                         <code>Initialize</code>
                         for data gathering.</li>
-                    <li>If the user did not log in to Iridium Cloud, 4. and 5. will not happen which means non of your
-                        plugin code will run, including code inside and outside of <code>Initialize</code>.</li>
+
+                </ul>
+                <p>This diagram roughly outlines the shutdown sequence of a plugin:</p>
+                <img class="screenshot" src="/img/shutdown.png">
+                <ul>
+                    <li>Several event/user action might cause your plugin to be shutdown, including user logs out of
+                        Iridium Cloud, user stops your plugin etc. When that happens, Iridium will terminate your
+                        plugin's lifecycle. Your plugin should implement the optional
+                        <a href="/?api#IPlugin#Shutdown"><code>Shutdown()</code></a> to handle any shutdown or cleanup.
+                    </li>
+                    <li><a href="/?api#IPlugin#Shutdown"><code>Shutdown()</code></a> is timboxed to 3 seconds. After 3
+                        seconds, regardless of completion of your cleanup method, Iridium will force exit the plugin
+                        process.
+                    </li>
+                    <li>You may still want to handle <code>process.on('exit')</code> in your plugin as there may be
+                        situation where Iridium doesn't call <code>Shutdown</code>.</li>
                 </ul>
                 <div class="title-container">
                     <h4 id="logging">Logging And STDIO</h4>
