@@ -4,9 +4,6 @@
         "./src/**/*.md",
         "./src/**/*.html"
     ],
-    "app": {
-        "entrance": "content:gettingstarted"
-    },
     "dest": "./dist/",
     "assets": {
         "img/": ["./img/*.*"],
@@ -16,7 +13,7 @@
         "path": "zebra",
         "options": {
             "title": {
-                "label": "Iridium Plugin API"
+                "label": "Iridium Plugin Javscript API"
             },
             "logo": {
                 "dark": "img/iridium-icon-256.png",
@@ -50,19 +47,9 @@
                 "animations": true,
                 "menu": [
                     {
-                        "label": "Getting Started",
+                        "label": "Iridium Documentation",
                         "iconClass": "fas fa-book",
-                        "href": "./"
-                    },
-                    {
-                        "label": "Development Guide",
-                        "iconClass": "fas fa-cubes",
-                        "href": "./?content=development"
-                    },
-                    {
-                        "label": "API",
-                        "iconClass": "fas fa-code",
-                        "href": "./?api"
+                        "href": "https://michaellu.gitbook.io/iridium-documentation/"
                     }
                 ]
             }
