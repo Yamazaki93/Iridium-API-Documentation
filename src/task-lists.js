@@ -25,6 +25,7 @@
  * @function
  * @name IridiumApp.TaskLists#GetTaskList
  * @param {string} id The id of the task list
+* @throws {Error} If id is not specified
  * @returns {Promise}
  * <br>
  * Resolves to {@link #ITaskList|`ITaskList[]`}.
@@ -44,7 +45,7 @@
  * @param {Function} handler The associated event handler that will be invoked, the event argument will be passed in as 1st parameter.
  * @param {string} [registration] An optional registration token associated with this handler that can be used later to unsubscribe. 
  * This token need not be unique per handler.
- * 
+ * @throws {Error} If the event is not a recognized TaskEvent
  * @example
  * // When a task is created, print the title to debug console
  * TaskListsContext.on(TaskEvents.TaskCreated, (arg) => {
@@ -61,7 +62,7 @@
 * @name IridiumApp.TaskLists#off
 * @param {TaskEvents} event The event to unsubscribe.
 * @param {string} [registration] The registration token associated with handlers previously subscribed. 
-* 
+* @throws {Error} If the event is not a recognized TaskEvent
 * @example
 * // Log only the first created task's title after registering handler
 * TaskListsContext.on(TaskEvents.TaskCreated, (arg) => {
