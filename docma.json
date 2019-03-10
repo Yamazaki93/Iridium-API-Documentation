@@ -9,6 +9,9 @@
         "img/": ["./img/*.*"],
         "css/": ["./src/*.css"]
     },
+    "app": {
+        "base": "/Iridium-API-Documentation"
+    },
     "template": {
         "path": "zebra",
         "options": {
