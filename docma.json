@@ -16,7 +16,7 @@
         "path": "zebra",
         "options": {
             "title": {
-                "label": "Iridium Plugin Javscript API"
+                "label": "Iridium Desktop Plugin API"
             },
             "logo": {
                 "dark": "img/iridium-icon-256.png",
