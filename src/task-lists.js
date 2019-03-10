@@ -187,14 +187,6 @@ IridiumApp.TaskEvents = {
      * <blockquote>TaskDeleted will not be emitted when a task is moved out of a list into another list, see {@link IridiumApp.TaskEvents | TaskEvents.TaskMoved} </blockquote>
      */
     TaskDeleted: "TaskDeleted",
-
-    /**
-     * TaskDownloaded is emitted when: 1. a new task is downloaded from Iridium Cloud or, 2. an existing task is updated from Iridium Cloud
-     * <br>
-     * Argument: {@link TaskEventArg}
-     */
-    TaskDownloaded: "TaskDownloaded",
-
     /**
      * TaskMoved is emitted when a task is moved from one list to another by the user. 
      * <br>
