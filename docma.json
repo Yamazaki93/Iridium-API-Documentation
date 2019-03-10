@@ -9,9 +9,6 @@
         "img/": ["./img/*.*"],
         "css/": ["./src/*.css"]
     },
-    "app": {
-        "base": "/"
-    },
     "template": {
         "path": "zebra",
         "options": {
