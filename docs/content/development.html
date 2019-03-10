@@ -1,0 +1,165 @@
+<link rel="stylesheet" href="css/custom-styles.css">
+<div class="container">
+    <div class="inner">
+        <div class="side-nav">
+            <ul>
+                <li>
+                    <h5><a href="#advanced">Advanced</a></h5>
+                </li>
+                <li>
+                    <small><a href="#initialization">Initialization And Shutdown Sequence</a></small>
+                </li>
+                <li>
+                    <small><a href="#command-query">Commands And Queries</a></small>
+                </li>
+                <li>
+                    <small><a href="#event">Event Subscription</a></small>
+                </li>
+                <li>
+                    <small><a href="#logging">Logging And STDIO</a></small>
+                </li>
+            </ul>
+        </div>
+        <div class="main-content" id="top">
+            <div class="contents">
+                <div class="title-container">
+                    <h2 id="advanced">Advanced </h2>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>In the following sections, we will discuss several advanced topics about the Plugin system. If you
+                    havn't, we strongly recommand reading through the Getting Started section for the basics.</p>
+                <div class="title-container">
+                    <h4 id="initialization">Initialization And Shutdown Sequence</h4>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>As you've already seen in Getting Started, Iridium will call your plugin to initialize and provide
+                    the app context. Here we will examine the initialization process in detail.</p>
+                <p>This diagram roughly outlines the starting sequence of a plugin:</p>
+                <img class="screenshot" src="/img/init-sequence.png">
+                <p>Several things to note here: </p>
+                <ul>
+                    <li>If the user did not log in to Iridium Cloud, your plugin's lifecycle will not begin. That means
+                        non of your plugin code will be run
+                    </li>
+                    <li>When Iridium calls <code>Initialize(iridium)</code> at 5., all the task list, label and progress
+                        data are loaded from disk but cloud sync <b>MAY</b> be in progress. Your plugins should listen
+                        to relevant cloud events to synchornize data correctly and not solely rely on
+                        <code>Initialize</code>
+                        for data gathering.</li>
+
+                </ul>
+                <p>This diagram roughly outlines the shutdown sequence of a plugin:</p>
+                <img class="screenshot" src="/img/shutdown.png">
+                <ul>
+                    <li>Several events/user actions might cause your plugin to be shutdown, including user logs out of
+                        Iridium Cloud, user stops your plugin etc. When that happens, Iridium will terminate your
+                        plugin's lifecycle. Your plugin should implement the optional
+                        <a href="/?api#IPlugin#Shutdown"><code>Shutdown()</code></a> to handle any cleanup.
+                    </li>
+                    <li><a href="/?api#IPlugin#Shutdown"><code>Shutdown()</code></a> is timboxed to 3 seconds. After 3
+                        seconds, regardless of completion of your cleanup method, Iridium will force exit the plugin
+                        process.
+                    </li>
+                    <li>You may still want to handle <code>process.on('exit')</code> in your plugin as there may be
+                        situation where Iridium doesn't call <code>Shutdown</code>.</li>
+                </ul>
+                <div class="title-container">
+                    <h4 id="command-query">Commands And Queries</h4>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>Iridium's API methods follows command and query pattern (other than <code>on</code> and
+                    <code>off</code> methods) where commands do not retrieve data while queries do not change states of
+                    objects.</p>
+                <p>Unless otherwise noted, you can identify query methods with the prefix "Get". For example, <a
+                        href="/?api#IridiumApp.TaskLists#GetTaskList"><code>IridiumApp.TaskLists#GetTaskList(id)</code></a>
+                    is a query method.
+                </p>
+                <p>For query methods, a promise will be returned that resolves to the data requested, your plugin should
+                    handle promise rejection.</p>
+                <pre><code>iridium.TaskLists.GetTaskList('id').then(data => {
+}).catch(err => {
+    // in case the list is not found
+});</code></pre>
+                <div class="title-container">
+                    <h4 id="event">Event Subscription</h4>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>Events in Iridium can be subscribed using vaious <code>on</code> method in the API. When subscribing,
+                    a handler of signature <code>(eventArg) => {}</code> will need to be passed in. For example:</p>
+                <pre><code>iridium.TaskLists.on('TaskCreated', (eventArg) => {
+});</code></pre>
+                <p>The handler will be invoked with the event argument object specified in the API. If you need to
+                    unsubscribe a specific handler after subscribing, you should pass in a string registration key when
+                    subscribing: </p>
+                <pre><code>iridium.TaskLists.on('TaskCreated', (eventArg) => {
+}, 'my-key');</code></pre>
+                <p>Then, you can unsubscribe using the corresponding <code>off</code> function under the same object
+                    like this:</p>
+                <pre><code>iridium.TaskLists.off('TaskCreated', 'my-key');</code></pre>
+                <p>You can subscribe multiple handlers with the same key and unsubscribe them all at once</p>
+                <pre><code>iridium.TaskLists.on('TaskCreated', (eventArg) => {
+    //handler 1
+}, 'my-key');
+iridium.TaskLists.on('TaskCreated', (eventArg) => {
+    //handler 2
+}, 'my-key');
+iridium.TaskLists.off('TaskCreated', 'my-key');
+// both handler 1 and 2 will be unsubscribed</code></pre>
+                <p>You can also omit the registration key when unsubscribing to unsubscribe all handlers for a given
+                    event.</p>
+                <pre><code>iridium.TaskLists.on('TaskCreated', (eventArg) => {
+    //handler 1
+});
+iridium.TaskLists.on('TaskCreated', (eventArg) => {
+    //handler 2
+});
+iridium.TaskLists.off('TaskCreated');
+// both handler 1 and 2 and any other handlers for 'TaskCreated' will be unsubscribed</code></pre>
+                <blockquote>You should unsubscribe any unused event handlers to prevent performance issue in your plugin
+                </blockquote>
+                <div class="title-container">
+                    <h4 id="logging">Logging And STDIO</h4>
+                    <small class="go-to-top-button"><a href="#top"><i class="fas fa-arrow-up"></i></a></small>
+                </div>
+                <p>During initialization of your plugin, Iridium will pass in <a
+                        href="/?api#IridiumApp.Log"><code>Log</code></a> object as a logger. Your plugin can freely
+                    utilize this object to log debug, info or error data. </p>
+                <blockquote>Exercise caution when logging user's personal information, if use the logger to log personal
+                    inforamtion such as email, name, please inform the user in your plugin's description</blockquote>
+                <p>For example, you can log a debug entry like so:</p>
+                <pre><code>module.exports.Initialize = (iridium) => {
+    iridium.Log.Debug('My plugin is initialized');
+}</code></pre>
+                <p>You can also change your logger's log level to selectively omit certain levels of logs. The logger
+                    will only log entries from the set level and up. The available levels are, from low to high:</p>
+                <ul>
+                    <li>debug</li>
+                    <li>info</li>
+                    <li>warn</li>
+                    <li>error</li>
+                </ul>
+                <p>For example, setting the logger level to <code>warn</code> will disable all <code>debug</code> and
+                    <code>info</code> logs:</p>
+                <pre><code>module.exports.Initialize = (iridium) => {
+    iridium.Log.SetLevel('warn')
+    iridium.Log.Debug('This debug line is not logged');
+    iridium.Log.Warn('This warning is logged');
+}</code></pre>
+                <p>Setting the level to <code>false</code> disables the logger</p>
+                <blockquote>Setting the logger level is presistent, which means the level won't change unless you reset
+                    it. The default level is 'debug' </blockquote>
+                <p>The log file can be found at
+                    <code>Your Home Directory/Iridium/plugins/Your Plugin Directory/log.txt</code></p>
+                <p>Also, output produced by stdout and stderr will be redirected to
+                    <code>Your Home Directory/Iridium/plugins/Your Plugin Directory/output.txt</code>.</p>
+                <p>This means calling <code>console.log</code> in your plugin will print to this file. This makes
+                    debugging and collecting crash data from your plugin easier as other libraries you import are likely
+                    to use <code>console.log</code> or <code>console.error</code>.</p>
+                <blockquote>Generally, calling <code>Log</code> for logging and debugging your plugin is preferred as
+                    the <code>log.txt</code> file
+                    size is limited at <b>10MB</b> while the size of <code>output.txt</code> is not limited.
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
