@@ -13,16 +13,16 @@
  * @throws {Error} If the settings object is null or undefined
  * @throws {Error} If the settings size after serialization exceeds 10KB
  * @example
- * Settings.SetSettings('id', settings);
+ * Settings.SetSettings(settings);
  */
 /**
- * Gets a specific task list's information and tasks. The plugin settings will be initialized before {@link IPlugin#Initialize} is invoked.
+ * Gets the settings set by the plugin. The plugin settings will be initialized before {@link IPlugin#Initialize} is invoked.
  *
  * @function        
  * @name IridiumApp.Settings#GetSettings
  * @returns {Promise}
  * <br>
- * Resolves to an {@link Object} that was previously set by the plugin. If no settings exists, the object will {}.
+ * Resolves to an {@link Object} that was previously set by the plugin. If no settings exists, the object will be {}.
  * @example
  * Settings.GetSettings().then(settings => {
  *     // Read the settings

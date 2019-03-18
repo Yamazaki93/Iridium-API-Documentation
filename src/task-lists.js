@@ -171,14 +171,39 @@
 IridiumApp.TaskEvents = {
     /**
      * TaskCreated is emitted when a task is created and added to a list. This happens when:
-     *     1. User creates new task
-     *     2. User un-deletes a deleted task
-     *     3. User moves task into a list
+     * 
+     *     1. User creates new task.
+     * 
+     *     2. User un-deletes a deleted task.
+     * 
+     *     3. User moves task into a list.
+     * 
      * <br>
      * Argument: {@link TaskEventArg}
      * <blockquote>TaskCreated will not be emitted when a new task is downloaded from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskDownloaded} </blockquote>
      */
     TaskCreated: "TaskCreated",
+    /**
+     * TaskCompletedChanged is emitted when a task's completion state is changed, this happens when:
+     * 
+     *     1. User marks a task as completed.
+     * 
+     *     2. User marks a task as incomplete.
+     * 
+     *     3. User starts working on a task which cause the task to be marked incomplete.
+     * 
+     * <br>
+     * Argument: {@link TaskEventArg}
+     * <blockquote>TaskCompletedChanged will not be emitted when a task is downloaded from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskDownloaded} </blockquote>
+     */
+    TaskCompletedChanged: "TaskCompletedChanged",
+    /**
+     * TaskDueDateChanged is emitted when a task's duedate is changed
+     *  
+     * <br>
+     * Argument: {@link TaskEventArg}
+     */
+    TaskDueDateChanged: "TaskDueDateChanged",
     /**
      * TaskDeleted is emitted when a task is deleted by the user. 
      * <br>
