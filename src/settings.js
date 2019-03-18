@@ -22,7 +22,7 @@
  * @name IridiumApp.Settings#GetSettings
  * @returns {Promise}
  * <br>
- * Resolves to an {@link Object} that was previously set by the plugin. If no settings exists, the object will {}.
+ * Resolves to an {@link Object} that was previously set by the plugin. If no settings exists, the object will be {}.
  * @example
  * Settings.GetSettings().then(settings => {
  *     // Read the settings
