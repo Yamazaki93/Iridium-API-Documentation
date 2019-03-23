@@ -153,6 +153,18 @@
 * @property {string} id The id of the task which is UUID v4 formated.
 */
 /**
+* event arguments for task list updated events.
+* @typedef TaskListEventArg
+* @type Object
+*
+* @property {string} listId The id of list.
+* @property {string} listTitle The title of list.
+* @property {boolean} compldete True if task list is completed, false otherwise.
+* @property {boolean} archived True if task list is archived, false otherwise.
+* @property {number} completedPercentage The percentage of the completed tasks in this list. The number is rounded to whole number.
+* @property {number} inProgressPercentage The percentage of the in-progress tasks in this list. The number is rounded to whole number.
+*/
+/**
 * event arguments for task list progress updated event.
 * @typedef TaskListProgressUpdatedEventArg
 * @type Object
@@ -181,6 +193,22 @@ IridiumApp.TaskEvents = {
      * <br>
      * Argument: {@link TaskEventArg}
      * <blockquote>TaskCreated will not be emitted when a new task is downloaded from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskDownloaded} </blockquote>
+     */
+    TaskCreated: "TaskCreated",
+    /**
+     * TaskListCreated is emitted when user creates a task list, this can happen when:
+     * 
+     *     1. User creates new by using the + button next to Task Lists.
+     * 
+     *     2. User un-deletes a deleted task list.
+     * 
+     *     3. User promotes a task to a list.
+     * 
+     *     4. User creates a task that goes into a new list using the "Add Task" dialog.
+     * 
+     * <br>
+     * Argument: {@link TaskListEventArg}
+     * <blockquote>TaskListCreated will not be emitted when a new task list is downloaded from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskListDownloaded} </blockquote>
      */
     TaskCreated: "TaskCreated",
     /**
