@@ -38,6 +38,18 @@
  * });
  */
 /**
+ * Sets due date on a task.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#SetTaskDueDate
+ * @param {string} listId The id of the task list the task is in.
+ * @param {string} taskId The id of the task.
+ * @param {string} [dueDate] The due date of the task in ISO date string YYYY-MM-DD. This is optional, if undefined or '' passed in will remove due date on a task.
+ * @throws {Error} If lsitId or taskId is not specified
+ * @example
+ * TaskListsContext.SetTaskDueDate('81a7428b-3026-4023-a870-d32be105dd88', '81a7428b-3026-4023-a870-d32be105dd88', '2019-03-24');
+ */
+/**
  * Subscribes for a specific task event. The handler will be invoked when the associated event occurs in Iridium.
  * @function
  * @name IridiumApp.TaskLists#on
@@ -196,21 +208,18 @@ IridiumApp.TaskEvents = {
      */
     TaskCreated: "TaskCreated",
     /**
-     * TaskListCreated is emitted when user creates a task list, this can happen when:
+     * TaskUpdated is emitted when a task's general info is updated. This happens when:
      * 
-     *     1. User creates new by using the + button next to Task Lists.
+     *     1. User updates the task's title.
      * 
-     *     2. User un-deletes a deleted task list.
+     *     2. User changes labels on a task.
      * 
-     *     3. User promotes a task to a list.
-     * 
-     *     4. User creates a task that goes into a new list using the "Add Task" dialog.
+     *     3. User changes subtasks of a task.
      * 
      * <br>
-     * Argument: {@link TaskListEventArg}
-     * <blockquote>TaskListCreated will not be emitted when a new task list is downloaded from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskListDownloaded} </blockquote>
+     * Argument: {@link TaskEventArg}
      */
-    TaskCreated: "TaskCreated",
+    TaskUpdated: "TaskUpdated",
     /**
      * TaskCompletedChanged is emitted when a task's completion state is changed, this happens when:
      * 
@@ -247,7 +256,7 @@ IridiumApp.TaskEvents = {
      * <blockquote>TaskMoved will not be emitted when a task is moved by another user and synced from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskDeletedCloud} and {@link IridiumApp.TaskEvents | TaskEvents.TaskDownloaded} </blockquote>
      */
     TaskMoved: "TaskMoved",
-    
+
     /**
      * TaskListProgressUpdated is emitted when complete or progress percentage of a task list is changed. This can happen when user create a new task, mark a task in progress etc. This will also happen when data downloaded from Iridium Cloud changes a task lists' progress.
      * <br>
