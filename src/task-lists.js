@@ -45,7 +45,7 @@
  * @param {string} listId The id of the task list the task is in.
  * @param {string} taskId The id of the task.
  * @param {string} [dueDate] The due date of the task in ISO date string YYYY-MM-DD. This is optional, if undefined or '' passed in will remove due date on a task.
- * @throws {Error} If lsitId or taskId is not specified
+ * @throws {Error} If listId or taskId is not specified
  * @example
  * TaskListsContext.SetTaskDueDate('81a7428b-3026-4023-a870-d32be105dd88', '81a7428b-3026-4023-a870-d32be105dd88', '2019-03-24');
  */
