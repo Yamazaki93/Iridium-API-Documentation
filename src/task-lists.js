@@ -25,7 +25,6 @@
  * @function
  * @name IridiumApp.TaskLists#GetTaskList
  * @param {string} id The id of the task list
-* @throws {Error} If id is not specified
  * @returns {Promise}
  * <br>
  * Resolves to {@link #ITaskList|`ITaskList[]`}.
@@ -36,6 +35,91 @@
  *     // Prints how many tasks in the list.
  *     console.log(taskList.tasks.length);
  * });
+ */
+/**
+ * Sets due date on a task.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#SetTaskDueDate
+ * @param {string} listId The id of the task list the task is in.
+ * @param {string} taskId The id of the task.
+ * @param {string} [dueDate] The due date of the task in ISO date string YYYY-MM-DD. This is optional, if undefined or '' passed in will remove due date on a task.
+ * @example
+ * TaskListsContext.SetTaskDueDate('81a7428b-3026-4023-a870-d32be105dd88', '81a7428b-3026-4023-a870-d32be105dd88', '2019-03-24');
+ */
+/**
+ * Sets a task as completed or incompleted.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#SetTaskCompleted
+ * @param {string} listId The id of the task list the task is in.
+ * @param {string} taskId The id of the task.
+ * @param {boolean} completed True to set the task complete, false to set it incomplete
+ * @example
+ * TaskListsContext.SetTaskCompleted('81a7428b-3026-4023-a870-d32be105dd88', '81a7428b-3026-4023-a870-d32be105dd88', true);
+ */
+/**
+ * Creates a new task under a list.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#CreateTask
+ * @param {string} listId The id of the task list the new task is to be created.
+ * @param {string} taskId The id of the new task. If you need a new ID, call {@link IridiumApp.TaskLists#GenerateTaskID} .
+ * @param {string} title The title of the new task.
+ * @param {string} [dueDate] Optional due date in ISO date format YYYY-MM-DD. If not specified, task will be created without due date.
+ * 
+ * <blockquote> If you specified an taskId that already exist in the list, a {@link IridiumApp.TaskEvents | TaskEvents.TaskCreated} will be emitted with data of the existing task.</blockquote>
+ * 
+ * @example
+ * // creates an task with due date on 2019-01-01
+ * TaskListsContext.CreateTask('81a7428b-3026-4023-a870-d32be105dd88', '81a7428b-3026-4023-a870-d32be105dd88', 'Buy lots of things', '2019-01-01');
+ */
+/**
+ * Creates a new task list.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#CreateTaskList
+ * @param {string} listId The id of the new task list.  If you need a new ID, call {@link IridiumApp.TaskLists#GenerateTaskListID} .
+ * @param {string} title The title of the new task.
+ * 
+ * <blockquote> If you specified an listId that already exists, no list will be created and no events will be emitted.</blockquote>
+ * 
+ * @example
+ * TaskListsContext.CreateTaskList('81a7428b-3026-4023-a870-d32be105dd88', 'Shopping List');
+ */
+/**
+ * Updates a task's title.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#UpdateTaskTitle
+ * @param {string} listId The id of the task list the task is in.
+ * @param {string} taskId The id of the task.
+ * @param {string} title The new title of the task.
+ * 
+ * @example
+ * TaskListsContext.UpdateTaskTitle('81a7428b-3026-4023-a870-d32be105dd88', '81a7428b-3026-4023-a870-d32be105dd88', 'Buy something more');
+ */
+/**
+ * Creates a unique ID for creating a new task.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#GenerateTaskID
+ * @returns {string}
+ * 
+ * @example
+ * // use generated id to create a new task
+ * TaskListsContext.CreateTask('81a7428b-3026-4023-a870-d32be105dd88', TaskListsContext.GenerateTaskID(), 'Buy something');
+ */
+/**
+ * Creates a unique ID for creating a new task list.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#GenerateTaskListID
+ * @returns {string}
+ * 
+ * @example
+ * // use generated id to create a new task list
+ * TaskListsContext.CreateTaskList(TaskListsContext.GenerateTaskListID(), 'Shopping List');
  */
 /**
  * Subscribes for a specific task event. The handler will be invoked when the associated event occurs in Iridium.
@@ -133,6 +217,7 @@
 * @property {string} dueDate Due date of the task if any. When set, the string is ISO formatted date string YYYY-MM-DD. When no due date is set, the string is empty.
 */
 
+
 /**
 * event arguments for task deleted events.
 * @typedef TaskDeletedEventArg
@@ -151,6 +236,18 @@
 * @property {string} fromListId The id of list where the task is moved <b>from</b>, which is UUID v4 formated.
 * @property {string} toListId The id of list where the task is moved <b>to</b>, which is UUID v4 formated.
 * @property {string} id The id of the task which is UUID v4 formated.
+*/
+/**
+* event arguments for task list updated events.
+* @typedef TaskListEventArg
+* @type Object
+*
+* @property {string} listId The id of list.
+* @property {string} listTitle The title of list.
+* @property {boolean} compldete True if task list is completed, false otherwise.
+* @property {boolean} archived True if task list is archived, false otherwise.
+* @property {number} completedPercentage The percentage of the completed tasks in this list. The number is rounded to whole number.
+* @property {number} inProgressPercentage The percentage of the in-progress tasks in this list. The number is rounded to whole number.
 */
 /**
 * event arguments for task list progress updated event.
@@ -183,6 +280,27 @@ IridiumApp.TaskEvents = {
      * <blockquote>TaskCreated will not be emitted when a new task is downloaded from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskDownloaded} </blockquote>
      */
     TaskCreated: "TaskCreated",
+    /**
+     * TaskCreated is emitted when a task is created and added to a list. This happens when user creates a new task list.
+     * 
+     * <br>
+     * Argument: {@link TaskListEventArg}
+     * <blockquote>TaskListCreated will not be emitted when a new task list is downloaded from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskListDownloaded} </blockquote>
+     */
+    TaskListCreated: "TaskListCreated",
+    /**
+     * TaskUpdated is emitted when a task's general info is updated. This happens when:
+     * 
+     *     1. User updates the task's title.
+     * 
+     *     2. User changes labels on a task.
+     * 
+     *     3. User changes subtasks of a task.
+     * 
+     * <br>
+     * Argument: {@link TaskEventArg}
+     */
+    TaskUpdated: "TaskUpdated",
     /**
      * TaskCompletedChanged is emitted when a task's completion state is changed, this happens when:
      * 
@@ -219,7 +337,7 @@ IridiumApp.TaskEvents = {
      * <blockquote>TaskMoved will not be emitted when a task is moved by another user and synced from Iridium Cloud, see {@link IridiumApp.TaskEvents | TaskEvents.TaskDeletedCloud} and {@link IridiumApp.TaskEvents | TaskEvents.TaskDownloaded} </blockquote>
      */
     TaskMoved: "TaskMoved",
-    
+
     /**
      * TaskListProgressUpdated is emitted when complete or progress percentage of a task list is changed. This can happen when user create a new task, mark a task in progress etc. This will also happen when data downloaded from Iridium Cloud changes a task lists' progress.
      * <br>
