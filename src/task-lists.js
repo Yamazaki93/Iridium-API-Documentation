@@ -122,6 +122,19 @@
  * TaskListsContext.CreateTaskList(TaskListsContext.GenerateTaskListID(), 'Shopping List');
  */
 /**
+ * Toggles a label on a task. If the given label is not present on the task, it will be added. If the given label is present on the task, it will be removed.
+ *
+ * @function
+ * @name IridiumApp.TaskLists#ToggleTaskLabel
+ * @param {string} listId The id of the task list the task belongs to.
+ * @param {string} taskId The id of the task.
+ * @param {string} labelTitle The title of the label to toggle. To get all available labels, see {@link IridiumApp.Labels#GetAllLabels}.
+ * 
+ * @example
+ * // Toggle the label with title 'Important'
+ * TaskListsContext.ToggleTaskLabel('81a7428b-3026-4023-a870-d32be105dd88', '81a7428b-3026-4023-a870-d32be105dd88', 'Important');
+ */
+/**
  * Subscribes for a specific task event. The handler will be invoked when the associated event occurs in Iridium.
  * @function
  * @name IridiumApp.TaskLists#on
